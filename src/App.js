@@ -9,6 +9,7 @@ import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-d
 import SignupForm from './components/SignupForm';
 import LoginForm from './components/LoginForm';
 import Profile from './components/Profile';
+import NotFound from './components/NotFound';
 
 // Import ToastContainer for displaying notifications
 import { ToastContainer } from 'react-toastify';
@@ -46,6 +47,8 @@ const App = () => {
                 />
                 {/* Default route redirects to the registration page */}
                 <Route path="/" element={<Navigate to="/register" />} />
+                {/* Catch-all route for 404 */}
+                <Route path="*" element={<NotFound />} /> 
             </Routes>
         </Router>
     );
