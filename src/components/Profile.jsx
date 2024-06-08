@@ -1,15 +1,27 @@
+// Import necessary libraries and components
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+/**
+ * Profile component that displays the user's profile information and handles logout functionality.
+ * 
+ * @param {Object} props - Component properties
+ * @param {string} props.auth - The authentication token
+ * @returns {JSX.Element|null} The Profile component
+ */
 const Profile = ({ auth }) => {
+    // State to store user profile information
     const [user, setUser] = useState(null);
+    // Hook to navigate programmatically
     const navigate = useNavigate();
 
+    // Effect hook to fetch user profile information on component mount
     useEffect(() => {
         const fetchProfile = async () => {
             try {
+                // Fetch user profile data from the API
                 const response = await fetch('http://localhost:8000/api/users/profile', {
                     method: 'GET',
                     headers: {
@@ -19,14 +31,17 @@ const Profile = ({ auth }) => {
                     credentials: 'include',
                 });
 
+                // Check if the response is not OK
                 if (!response.ok) {
                     toast.error('Failed to load profile');
                 }
 
+                // Parse the response data
                 const data = await response.json();
                 setUser(data);
                 toast.success('Profile loaded successfully');
             } catch (err) {
+                // Handle errors and redirect to login
                 toast.error('Failed to load profile. Redirecting to login...');
                 navigate('/login');
             }
@@ -35,8 +50,10 @@ const Profile = ({ auth }) => {
         fetchProfile();
     }, [auth, navigate]);
 
+    // Function to handle user logout
     const handleLogout = async () => {
         try {
+            // Send logout request to the API
             const response = await fetch('http://localhost:8000/api/users/logout', {
                 method: 'POST',
                 headers: {
@@ -45,6 +62,7 @@ const Profile = ({ auth }) => {
                 credentials: 'include',
             });
 
+            // Check if the response is not OK
             if (!response.ok) {
                 toast.error('Failed to log out. Please try again.');
             };
@@ -55,6 +73,7 @@ const Profile = ({ auth }) => {
         }
     };
 
+    // Render nothing if user data is not available yet
     if (!user) return null;
 
     return (

@@ -1,8 +1,15 @@
+// Import necessary libraries and components
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { errorToast, successToast } from '../config/toastConfig';
 
+/**
+ * SignupForm component for user registration.
+ * 
+ * @returns {JSX.Element} The SignupForm component
+ */
 const SignupForm = () => {
+    // State to manage the form data for registration
     const [formData, setFormData] = useState({
         username: '',
         email: '',
@@ -10,13 +17,24 @@ const SignupForm = () => {
     });
     const navigate = useNavigate();
 
+    /**
+     * Handle changes to the form fields and update the formData state.
+     * 
+     * @param {Object} e - The event object
+     */
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
+    /**
+     * Handle form submission for registration.
+     * 
+     * @param {Object} e - The event object
+     */
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
+            // Send registration request to the API
             const response = await fetch('http://localhost:8000/api/users/register', {
                 method: 'POST',
                 headers: {
@@ -26,6 +44,7 @@ const SignupForm = () => {
                 credentials: 'include', // Include credentials (cookies, authorization headers, etc.)
             });
     
+            // Check if the response is not OK
             if (!response.ok) {
                 const errorData = await response.json();
                 throw new Error(errorData.message || 'Registration failed. Please try again.');
@@ -38,6 +57,9 @@ const SignupForm = () => {
         }
     };
 
+    /**
+     * Redirect the user to the login page.
+     */
     const handleLoginRedirect = () => {
         navigate('/login');
     };
