@@ -35,13 +35,13 @@ const SignupForm = () => {
         e.preventDefault();
         try {
             // Send registration request to the API
-            const response = await fetch('http://localhost:8000/api/users/register', {
+            const response = await fetch(`${process.env.REACT_APP_BASE_URL}/register`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(formData),
-                credentials: 'include', // Include credentials (cookies, authorization headers, etc.)
+                credentials: 'include',
             });
     
             // Check if the response is not OK

@@ -22,7 +22,7 @@ const Profile = ({ auth }) => {
         const fetchProfile = async () => {
             try {
                 // Fetch user profile data from the API
-                const response = await fetch('http://localhost:8000/api/users/profile', {
+                const response = await fetch(`${process.env.REACT_APP_BASE_URL}/profile`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -54,7 +54,7 @@ const Profile = ({ auth }) => {
     const handleLogout = async () => {
         try {
             // Send logout request to the API
-            const response = await fetch('http://localhost:8000/api/users/logout', {
+            const response = await fetch(`${process.env.REACT_APP_BASE_URL}/logout`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -36,13 +36,14 @@ const LoginForm = ({ setAuth }) => {
         e.preventDefault();
         try {
             // Send login request to the API
-            const response = await fetch('http://localhost:8000/api/users/login', {
+            const response = await fetch(`${process.env.REACT_APP_BASE_URL}/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(formData),
-                credentials: 'include', // Include credentials (cookies, authorization headers, etc.)
+                // Include credentials (cookies, authorization headers, etc.)
+                credentials: 'include', 
             });
 
             // Check if the response is not OK
